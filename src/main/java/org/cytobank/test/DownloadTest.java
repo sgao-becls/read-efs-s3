@@ -32,28 +32,33 @@ public class DownloadTest {
 
   /**
    * read from efs
+   *
    * @param filePath
    */
   public void downloadFromEFS(String filePath) {
     Instant efsStartTime = Instant.now();
     Path path = Paths.get(filePath);
     String fileName = path.getFileName().toString();
-    try (FileInputStream fileInputStream = new FileInputStream(path.toFile());
-         FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(USER_HOME, EFS_TARGET_PATH, fileName).toFile())) {
-      byte[] buffer = new byte[1024];
-      int len;
-      while ((len = fileInputStream.read(buffer)) > 0) {
-        fileOutputStream.write(buffer, 0, len);
+    for (int i = 0; i < 10; i++) {
+      try (FileInputStream fileInputStream = new FileInputStream(path.toFile());
+           FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(USER_HOME, EFS_TARGET_PATH, fileName).toFile())) {
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = fileInputStream.read(buffer)) > 0) {
+          fileOutputStream.write(buffer, 0, len);
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      } finally {
+
       }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      System.out.println("read file from efs uses " + Duration.between(efsStartTime, Instant.now()).toMillis() + " ms\n");
     }
+    System.out.println("read file from efs uses " + Duration.between(efsStartTime, Instant.now()).toMillis() + " ms\n");
   }
 
   /**
    * read from S3
+   *
    * @param bucket
    * @param key
    */
@@ -81,6 +86,7 @@ public class DownloadTest {
   /**
    * read from S3 transfer
    * it is the multiThread download
+   *
    * @param bucket
    * @param key
    */
@@ -91,13 +97,15 @@ public class DownloadTest {
     System.out.println("init s3 transfer uses " + Duration.between(initS3TransferStart, Instant.now()).toMillis() + " ms\n");
 
     Instant s3mStartTime = Instant.now();
-    try {
-      s3Transfer.downloadFileMultiThread(bucket, key, Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      s3Transfer.shutDown();
-      System.out.println("read file from s3 multiple download, uses " + Duration.between(s3mStartTime, Instant.now()).toMillis() + " ms\n");
+    for (int i = 0; i < 10; i++) {
+      try {
+        s3Transfer.downloadFileMultiThread(bucket, key, Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
+      } catch (IOException e) {
+        e.printStackTrace();
+      } finally {
+        s3Transfer.shutDown();
+      }
     }
+    System.out.println("read file from s3 multiple download, uses " + Duration.between(s3mStartTime, Instant.now()).toMillis() + " ms\n");
   }
 }
