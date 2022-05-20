@@ -2,23 +2,14 @@
 
 ```shell
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/100000r_16c.fcs" "/home/ec2-user/fcs/100000r_16c_1211c24229eb8186c12c586287cf54c7746b2657abb123b91de14ab8787cd657bc69cf9426d9e5949fa3d09dd2105e0cfeb88a03dd715bc5955c0eb4cf0fd2d8.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/1000000r_16c.fcs" "/home/ec2-user/fcs/1000000r_16c_0e8a021d74903eb9f0a70caea0415983419fc2d1a6750d05494180d77be5919d24894f5cf1e33ed0a608ac57a64c418ef8505c8ec68f256b2c4dec029e4b954e.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/2000000r_16c.fcs" "/home/ec2-user/fcs/2000000r_16c_d67996d5436e10f005afcbb27a3917560861e5197dc539abed8d0a259568bbdbf0bf208298c743c20c3142ec5ce411b4842ba2e7b20bb920a85e5fa02309038d.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/3000000r_16c.fcs" "/home/ec2-user/fcs/3000000r_16c_89f51f253b11a810f3142a4cf38786f38b68ecc0be43c0b2be22e83a200575fc080d8a9de87270c1acf3f93fc179bcb393b180de85b4d2a49de31198b0f6319a.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/4000000r_16c.fcs" "/home/ec2-user/fcs/4000000r_16c_5ef7f6a49b08a9c6784d5f70ba7f00bade443918abc7510d3f84643092bafe532536e272a0668da0f3539d75873bf113e3900bb575f5b9317f9b911fb1d324fe.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/5000000r_16c.fcs" "/home/ec2-user/fcs/5000000r_16c_18964383119e78a24d7fff00ffdf5713021fba319206c70bae92dae530dd342f2beef07d3265678095576e58c926d0447f53044e8e13556925ca74c52f3a9571.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/6000000r_16c.fcs" "/home/ec2-user/fcs/6000000r_16c_14ea5e2608bb8745588e19acb9166342ebfc412245c7393dfab481c452fcfefb0802c50cff4531a60de109ed19aafdd910787bc0e16db80ad69d116a059bec1b.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/8000000r_16c.fcs" "/home/ec2-user/fcs/8000000r_16c_3773d395e1e9bde772b8614cfa5ebff15dec97f452751f32ef5a41ade27ddff227b8e0b96dcaec0627115ac88356219c78a76de83ff23e4bc52ae175ebb1592b.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/13000000r_16c.fcs" "/home/ec2-user/fcs/13000000r_16c_0b8dc3a84c594e41f2228f87f4cbf908db4513dbef8b2e577c2ab895bae166229ade0e2a449e7ca6fcfe8d1a6a53e5f70b1c0c35fc4b24917c9fc00afe77bbb2.fcs"
-
 java -jar read-efs-s3.jar u "fcs-file-test-data" "test/17000000r_16c.fcs" "/home/ec2-user/fcs/17000000r_16c_b8a22e1931ca7d79134e978110dceadc2494363ff37b79be97f678349277745b439424897bb3aea14fa6959832fe19a4782927b53f09191c8a2fc0865f1ace20.fcs"
 
 ```
@@ -27,23 +18,14 @@ java -jar read-efs-s3.jar u "fcs-file-test-data" "test/17000000r_16c.fcs" "/home
 
 ```shell
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/100000r_16c_1211c24229eb8186c12c586287cf54c7746b2657abb123b91de14ab8787cd657bc69cf9426d9e5949fa3d09dd2105e0cfeb88a03dd715bc5955c0eb4cf0fd2d8.fcs" "/home/ec2-user/efs/100000r_16c_1211c24229eb8186c12c586287cf54c7746b2657abb123b91de14ab8787cd657bc69cf9426d9e5949fa3d09dd2105e0cfeb88a03dd715bc5955c0eb4cf0fd2d8.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/1000000r_16c_0e8a021d74903eb9f0a70caea0415983419fc2d1a6750d05494180d77be5919d24894f5cf1e33ed0a608ac57a64c418ef8505c8ec68f256b2c4dec029e4b954e.fcs" "/home/ec2-user/efs/1000000r_16c_0e8a021d74903eb9f0a70caea0415983419fc2d1a6750d05494180d77be5919d24894f5cf1e33ed0a608ac57a64c418ef8505c8ec68f256b2c4dec029e4b954e.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/2000000r_16c_d67996d5436e10f005afcbb27a3917560861e5197dc539abed8d0a259568bbdbf0bf208298c743c20c3142ec5ce411b4842ba2e7b20bb920a85e5fa02309038d.fcs" "/home/ec2-user/efs/2000000r_16c_d67996d5436e10f005afcbb27a3917560861e5197dc539abed8d0a259568bbdbf0bf208298c743c20c3142ec5ce411b4842ba2e7b20bb920a85e5fa02309038d.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/3000000r_16c_89f51f253b11a810f3142a4cf38786f38b68ecc0be43c0b2be22e83a200575fc080d8a9de87270c1acf3f93fc179bcb393b180de85b4d2a49de31198b0f6319a.fcs" "/home/ec2-user/efs/3000000r_16c_89f51f253b11a810f3142a4cf38786f38b68ecc0be43c0b2be22e83a200575fc080d8a9de87270c1acf3f93fc179bcb393b180de85b4d2a49de31198b0f6319a.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/4000000r_16c_5ef7f6a49b08a9c6784d5f70ba7f00bade443918abc7510d3f84643092bafe532536e272a0668da0f3539d75873bf113e3900bb575f5b9317f9b911fb1d324fe.fcs" "/home/ec2-user/efs/4000000r_16c_5ef7f6a49b08a9c6784d5f70ba7f00bade443918abc7510d3f84643092bafe532536e272a0668da0f3539d75873bf113e3900bb575f5b9317f9b911fb1d324fe.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/5000000r_16c_18964383119e78a24d7fff00ffdf5713021fba319206c70bae92dae530dd342f2beef07d3265678095576e58c926d0447f53044e8e13556925ca74c52f3a9571.fcs" "/home/ec2-user/efs/5000000r_16c_18964383119e78a24d7fff00ffdf5713021fba319206c70bae92dae530dd342f2beef07d3265678095576e58c926d0447f53044e8e13556925ca74c52f3a9571.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/6000000r_16c_14ea5e2608bb8745588e19acb9166342ebfc412245c7393dfab481c452fcfefb0802c50cff4531a60de109ed19aafdd910787bc0e16db80ad69d116a059bec1b.fcs" "/home/ec2-user/efs/6000000r_16c_14ea5e2608bb8745588e19acb9166342ebfc412245c7393dfab481c452fcfefb0802c50cff4531a60de109ed19aafdd910787bc0e16db80ad69d116a059bec1b.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/8000000r_16c_3773d395e1e9bde772b8614cfa5ebff15dec97f452751f32ef5a41ade27ddff227b8e0b96dcaec0627115ac88356219c78a76de83ff23e4bc52ae175ebb1592b.fcs" "/home/ec2-user/efs/8000000r_16c_3773d395e1e9bde772b8614cfa5ebff15dec97f452751f32ef5a41ade27ddff227b8e0b96dcaec0627115ac88356219c78a76de83ff23e4bc52ae175ebb1592b.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/13000000r_16c_0b8dc3a84c594e41f2228f87f4cbf908db4513dbef8b2e577c2ab895bae166229ade0e2a449e7ca6fcfe8d1a6a53e5f70b1c0c35fc4b24917c9fc00afe77bbb2.fcs" "/home/ec2-user/efs/13000000r_16c_0b8dc3a84c594e41f2228f87f4cbf908db4513dbef8b2e577c2ab895bae166229ade0e2a449e7ca6fcfe8d1a6a53e5f70b1c0c35fc4b24917c9fc00afe77bbb2.fcs"
-
 java -jar read-efs-s3.jar d "fcs-file-test-data" "fcs_6M_to_1G/17000000r_16c_b8a22e1931ca7d79134e978110dceadc2494363ff37b79be97f678349277745b439424897bb3aea14fa6959832fe19a4782927b53f09191c8a2fc0865f1ace20.fcs" "/home/ec2-user/efs/17000000r_16c_b8a22e1931ca7d79134e978110dceadc2494363ff37b79be97f678349277745b439424897bb3aea14fa6959832fe19a4782927b53f09191c8a2fc0865f1ace20.fcs"
 
 ```
