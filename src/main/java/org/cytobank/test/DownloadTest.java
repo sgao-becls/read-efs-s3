@@ -96,6 +96,7 @@ public class DownloadTest {
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
+      s3Transfer.shutDown();
       System.out.println("read file from s3 multiple download, uses " + Duration.between(s3mStartTime, Instant.now()).toMillis() + " ms\n");
     }
   }

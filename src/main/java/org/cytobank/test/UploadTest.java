@@ -50,6 +50,7 @@ public class UploadTest {
     try {
       s3Transfer.uploadFile(bucket, key, Paths.get(filePath).toString());
     } finally {
+      s3Transfer.shutDown();
       System.out.println("write file to s3, uses " + Duration.between(s3mStartTime, Instant.now()).toMillis() + " ms\n");
     }
   }
