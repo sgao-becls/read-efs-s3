@@ -13,7 +13,6 @@ public class UploadTest {
 
   private static final String USER_HOME = "/home/ec2-user";
   private static final String TARGET_PATH = "efs";
-  private static final String UPLOAD_EFS_FILE_NAME = "efs_file";
 
   /**
    * read from efs
@@ -21,8 +20,9 @@ public class UploadTest {
    */
   public void uploadToEFS(String filePath) {
     Instant efsStartTime = Instant.now();
+    String fileName = Paths.get(filePath).getFileName().toString();
     try (FileInputStream fileInputStream = new FileInputStream(Paths.get(filePath).toFile());
-         FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(USER_HOME, TARGET_PATH, UPLOAD_EFS_FILE_NAME).toFile())) {
+         FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(USER_HOME, TARGET_PATH, fileName).toFile())) {
       byte[] buffer = new byte[1024];
       int len;
       while ((len = fileInputStream.read(buffer)) > 0) {
