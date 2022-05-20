@@ -33,13 +33,13 @@ public class App {
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      System.out.println("read file from efs uses " + Duration.between(Instant.now(), efsStartTime).toMillis());
+      System.out.println("read file from efs uses " + Duration.between(efsStartTime, Instant.now()).toMillis() + " ms\n");
     }
 
     // read from S3 multiThread download
     Instant initS3TransferStart = Instant.now();
     S3Transfer s3Transfer = S3Transfer.getInstance();
-    System.out.println("init s3 transfer uses " + Duration.between(Instant.now(), initS3TransferStart).toMillis());
+    System.out.println("init s3 transfer uses " + Duration.between(initS3TransferStart, Instant.now()).toMillis() + " ms\n");
 
     Instant s3mStartTime = Instant.now();
     try {
@@ -47,13 +47,13 @@ public class App {
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      System.out.println("read file from s3 multiple download, uses " + Duration.between(Instant.now(), s3mStartTime).toMillis());
+      System.out.println("read file from s3 multiple download, uses " + Duration.between(s3mStartTime, Instant.now()).toMillis() + " ms\n");
     }
 
     // read from S3
     Instant initS3ClientStart = Instant.now();
     AmazonS3 s3Client = S3ClientHolder.getInstance().getS3Client();
-    System.out.println("init s3 client uses " + Duration.between(Instant.now(), initS3TransferStart).toMillis());
+    System.out.println("init s3 client uses " + Duration.between(initS3ClientStart, Instant.now()).toMillis() + " ms\n");
 
     Instant s3StartTime = Instant.now();
     try (S3Object s3Object = s3Client.getObject(bucket, key);
@@ -67,7 +67,7 @@ public class App {
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      System.out.println("read file from s3 uses " + Duration.between(Instant.now(), s3StartTime).toMillis());
+      System.out.println("read file from s3 uses " + Duration.between(s3StartTime, Instant.now()).toMillis() + " ms\n");
     }
   }
 
