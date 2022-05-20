@@ -39,7 +39,8 @@ public class DownloadTest {
     Instant efsStartTime = Instant.now();
     Path path = Paths.get(filePath);
     String fileName = path.getFileName().toString();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 16; i++) {
+      Instant start = Instant.now();
       try (FileInputStream fileInputStream = new FileInputStream(path.toFile());
            FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(USER_HOME, EFS_TARGET_PATH, fileName).toFile())) {
         byte[] buffer = new byte[1024];
@@ -50,7 +51,7 @@ public class DownloadTest {
       } catch (IOException e) {
         e.printStackTrace();
       } finally {
-
+        System.out.println("read file from efs uses " + Duration.between(start, Instant.now()).toMillis() + " ms\n");
       }
     }
     System.out.println("read file from efs uses " + Duration.between(efsStartTime, Instant.now()).toMillis() + " ms\n");
@@ -79,7 +80,7 @@ public class DownloadTest {
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      System.out.println("read file from s3 uses " + Duration.between(s3StartTime, Instant.now()).toMillis() + " ms\n");
+      System.out.println("read file from s3 TOTAL uses " + Duration.between(s3StartTime, Instant.now()).toMillis() + " ms\n");
     }
   }
 
@@ -97,7 +98,7 @@ public class DownloadTest {
     System.out.println("init s3 transfer uses " + Duration.between(initS3TransferStart, Instant.now()).toMillis() + " ms\n");
 
     Instant s3mStartTime = Instant.now();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 16; i++) {
       try {
         s3Transfer.downloadFileMultiThread(bucket, key, Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
       } catch (IOException e) {

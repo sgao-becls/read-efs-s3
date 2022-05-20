@@ -21,7 +21,8 @@ public class UploadTest {
   public void uploadToEFS(String filePath) {
     Instant efsStartTime = Instant.now();
     String fileName = Paths.get(filePath).getFileName().toString();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 16; i++) {
+      Instant start = Instant.now();
       try (FileInputStream fileInputStream = new FileInputStream(Paths.get(filePath).toFile());
            FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(USER_HOME, TARGET_PATH, fileName).toFile())) {
         byte[] buffer = new byte[1024];
@@ -32,10 +33,10 @@ public class UploadTest {
       } catch (IOException e) {
         e.printStackTrace();
       } finally {
-
+        System.out.println("write file from efs uses " + Duration.between(start, Instant.now()).toMillis() + " ms\n");
       }
     }
-    System.out.println("write file from efs uses " + Duration.between(efsStartTime, Instant.now()).toMillis() + " ms\n");
+    System.out.println("write file from efs TOTAL uses " + Duration.between(efsStartTime, Instant.now()).toMillis() + " ms\n");
   }
 
   /**
@@ -50,7 +51,7 @@ public class UploadTest {
     System.out.println("init s3 transfer uses " + Duration.between(initS3TransferStart, Instant.now()).toMillis() + " ms\n");
 
     Instant s3mStartTime = Instant.now();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 16; i++) {
       try {
         s3Transfer.uploadFile(bucket, key, Paths.get(filePath).toString());
       } finally {
