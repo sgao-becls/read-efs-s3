@@ -12,14 +12,18 @@ public class App {
     String bucket = args[1];
     String filePrefix = args[2];
 
+    ReadTest readTest = new ReadTest();
     if(action.equalsIgnoreCase("w")) {
 //      WriteTest uploadTest = new WriteTest();
 //      uploadTest.writeToEFS(filePrefix);
 //      uploadTest.writeToS3(bucket, filePrefix, filePrefix);
     } else if(action.equalsIgnoreCase("r")) {
-      ReadTest readTest = new ReadTest();
+
       readTest.readFromEFSMultiple(filePrefix);
       readTest.readFromS3Multiple(bucket, filePrefix);
+    } else if(action.equalsIgnoreCase("r1")) {
+      readTest.readFromEFSSingleThread(filePrefix);
+      readTest.readFromS3SingleThread(bucket, filePrefix);
     } else {
       return;
     }

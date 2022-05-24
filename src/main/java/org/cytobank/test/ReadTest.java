@@ -51,7 +51,7 @@ public class ReadTest {
               TimeUnit.MILLISECONDS,
               new LinkedBlockingQueue<>());
     } catch (IOException e) {
-      e.printStackTrace();
+      log.info(e.getMessage());
     }
   }
 
@@ -93,7 +93,7 @@ public class ReadTest {
         fileOutputStream.write(buffer, 0, len);
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      log.info(e.getMessage());
     } finally {
       log.info(index + " - read file from efs uses " + Duration.between(start, Instant.now()).toMillis() + " ms\n");
     }
@@ -119,7 +119,10 @@ public class ReadTest {
   }
 
   public void readFromS3Multiple(String bucket, String keyPrefix) {
+    Instant initS3TransferStart = Instant.now();
     S3Transfer s3Transfer = S3Transfer.getInstance();
+    log.info("init s3 transfer uses " + Duration.between(initS3TransferStart, Instant.now()).toMillis() + " ms\n");
+    Instant s3mStartTime = Instant.now();
     CompletableFuture.allOf(
             IntStream.range(1, 2 + 1)
                 .boxed()
@@ -130,6 +133,7 @@ public class ReadTest {
                                 readFromS3(bucket, keyPrefix + "_" + i, s3Transfer), executorService))
                 .toArray(CompletableFuture[]::new))
         .join();
+    log.info("read file from s3 multiple download, uses " + Duration.between(s3mStartTime, Instant.now()).toMillis() + " ms\n");
   }
 
   public void readFromS3(String bucket, String keyPrefix, S3Transfer s3Transfer) {
@@ -137,7 +141,7 @@ public class ReadTest {
       String fileName = keyPrefix + ".fcs";
       s3Transfer.downloadFileMultiThread(bucket, S3_SECOND_PATH + "/" + fileName, Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
     } catch (IOException e) {
-      e.printStackTrace();
+      log.info(e.getMessage());
     } finally {
       s3Transfer.shutDown();
     }
