@@ -23,7 +23,7 @@ public class ReadTest {
   private static final Logger log = Logger.getLogger(ReadTest.class.getName());
 
   // File amount that we are using in the test
-  private static final int FILE_AMOUNT = 16;
+  private static final int FILE_AMOUNT = 10;
 
   // config of Test Host
   private static final String USER_HOME = "/home/ec2-user";
@@ -124,7 +124,7 @@ public class ReadTest {
     log.info("init s3 transfer uses " + Duration.between(initS3TransferStart, Instant.now()).toMillis() + " ms\n");
     Instant s3mStartTime = Instant.now();
     CompletableFuture.allOf(
-            IntStream.range(1, 2 + 1)
+            IntStream.range(1, FILE_AMOUNT + 1)
                 .boxed()
                 .map(
                     i ->
