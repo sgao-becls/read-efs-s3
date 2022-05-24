@@ -8,8 +8,11 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.logging.Logger;
 
-public class UploadTest {
+public class WriteTest {
+
+  private static final Logger log = Logger.getLogger(WriteTest.class.getName());
 
   private static final String USER_HOME = "/home/ec2-user";
   private static final String TARGET_PATH = "efs";
@@ -18,7 +21,7 @@ public class UploadTest {
    * read from efs
    * @param filePath
    */
-  public void uploadToEFS(String filePath) {
+  public void writeToEFS(String filePath) {
     Instant efsStartTime = Instant.now();
     String fileName = Paths.get(filePath).getFileName().toString();
     for (int i = 0; i < 16; i++) {
@@ -33,10 +36,10 @@ public class UploadTest {
       } catch (IOException e) {
         e.printStackTrace();
       } finally {
-        System.out.println("write file from efs uses " + Duration.between(start, Instant.now()).toMillis() + " ms\n");
+        log.info("write file from efs uses " + Duration.between(start, Instant.now()).toMillis() + " ms\n");
       }
     }
-    System.out.println("write file from efs TOTAL uses " + Duration.between(efsStartTime, Instant.now()).toMillis() + " ms\n");
+    log.info("write file from efs TOTAL uses " + Duration.between(efsStartTime, Instant.now()).toMillis() + " ms\n");
   }
 
   /**
@@ -45,10 +48,10 @@ public class UploadTest {
    * @param bucket
    * @param key
    */
-  public void uploadToS3(String bucket, String key, String filePath) {
+  public void writeToS3(String bucket, String key, String filePath) {
     Instant initS3TransferStart = Instant.now();
     S3Transfer s3Transfer = S3Transfer.getInstance();
-    System.out.println("init s3 transfer uses " + Duration.between(initS3TransferStart, Instant.now()).toMillis() + " ms\n");
+    log.info("init s3 transfer uses " + Duration.between(initS3TransferStart, Instant.now()).toMillis() + " ms\n");
 
     Instant s3mStartTime = Instant.now();
     for (int i = 0; i < 16; i++) {
@@ -58,7 +61,7 @@ public class UploadTest {
         s3Transfer.shutDown();
       }
     }
-    System.out.println("write file to s3, uses " + Duration.between(s3mStartTime, Instant.now()).toMillis() + " ms\n");
+    log.info("write file to s3, uses " + Duration.between(s3mStartTime, Instant.now()).toMillis() + " ms\n");
   }
 
 }
