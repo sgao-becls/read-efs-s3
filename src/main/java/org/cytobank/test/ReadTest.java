@@ -70,7 +70,7 @@ public class ReadTest {
 
   public void readFromEFSMultiple(String filePrefix) {
     CompletableFuture.allOf(
-            IntStream.range(0, FILE_AMOUNT + 1)
+            IntStream.range(1, FILE_AMOUNT + 1)
                 .boxed()
                 .map(
                     i ->
@@ -121,7 +121,7 @@ public class ReadTest {
   public void readFromS3Multiple(String bucket, String keyPrefix) {
     S3Transfer s3Transfer = S3Transfer.getInstance();
     CompletableFuture.allOf(
-            IntStream.range(0, FILE_AMOUNT + 1)
+            IntStream.range(1, FILE_AMOUNT + 1)
                 .boxed()
                 .map(
                     i ->
