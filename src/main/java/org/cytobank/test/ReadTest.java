@@ -32,7 +32,6 @@ public class ReadTest {
 
   // config of EFS
   private static final String EFS_MOUNT_PATH = USER_HOME + "/efs";
-  private static final String EFS_SECOND_PATH = "fcs";
 
   // config of S3
   private static final String S3_SECOND_PATH = "fcs_6M_to_1G";
@@ -83,7 +82,7 @@ public class ReadTest {
   }
 
   private void readFromEFS(String filePrefix) {
-    Path sourcePathFromEFS = Paths.get(EFS_MOUNT_PATH, EFS_SECOND_PATH, filePrefix + ".fcs");
+    Path sourcePathFromEFS = Paths.get(EFS_MOUNT_PATH, filePrefix + ".fcs");
     String fileName = sourcePathFromEFS.getFileName().toString();
     Instant start = Instant.now();
     try (FileInputStream fileInputStream = new FileInputStream(sourcePathFromEFS.toFile());
@@ -136,7 +135,7 @@ public class ReadTest {
   public void readFromS3(String bucket, String keyPrefix, S3Transfer s3Transfer) {
     try {
       String fileName = keyPrefix + ".fcs";
-      s3Transfer.downloadFileMultiThread(bucket, S3_SECOND_PATH + "/" + fileName, Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
+      s3Transfer.downloadFileMultiThread(bucket, S3_SECOND_PATH + "/" + fileName + ".fcs", Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
