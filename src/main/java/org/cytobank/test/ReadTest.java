@@ -26,13 +26,8 @@ public class ReadTest {
   // File amount that we are using in the test
   private static final int FILE_AMOUNT = 10;
 
-  // config of Test Host
-  private static final String USER_HOME = "/home/ec2-user";
-  private static final String EFS_TARGET_PATH = "efs_download_test";
-  private static final String S3_TARGET_PATH = "s3_download_test";
-
   // config of EFS
-  private static final String EFS_MOUNT_PATH = USER_HOME + "/efs";
+  private static final String EFS_MOUNT_PATH = "/mnt/channelstripe";
 
   // config of S3
   private static final String S3_SECOND_PATH = "fcs_6M_to_1G";
@@ -40,10 +35,6 @@ public class ReadTest {
   private ExecutorService executorService;
 
   public ReadTest() {
-    try {
-      Files.createDirectories(Paths.get(USER_HOME, EFS_TARGET_PATH));
-      Files.createDirectories(Paths.get(USER_HOME, S3_TARGET_PATH));
-
       executorService =
           new ThreadPoolExecutor(
               16,
@@ -51,9 +42,6 @@ public class ReadTest {
               0L,
               TimeUnit.MILLISECONDS,
               new LinkedBlockingQueue<>());
-    } catch (IOException e) {
-      log.info(e.getMessage());
-    }
   }
 
   /**
@@ -86,8 +74,7 @@ public class ReadTest {
     Path sourcePathFromEFS = Paths.get(EFS_MOUNT_PATH, filePrefix + ".fcs");
     String fileName = sourcePathFromEFS.getFileName().toString();
     Instant start = Instant.now();
-    try (FileInputStream fileInputStream = new FileInputStream(sourcePathFromEFS.toFile());
-         FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(USER_HOME, EFS_TARGET_PATH, fileName).toFile())) {
+    try (FileInputStream fileInputStream = new FileInputStream(sourcePathFromEFS.toFile())) {
       byte[] buffer = new byte[1024];
       int len;
       int counter = 0;
