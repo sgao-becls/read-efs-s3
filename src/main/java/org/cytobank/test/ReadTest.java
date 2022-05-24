@@ -95,7 +95,7 @@ public class ReadTest {
 //        fileOutputStream.write(buffer, 0, len);
         counter += len;
       }
-      log.info("file size is " + counter);
+      log.info(index + "file size is " + counter);
     } catch (IOException e) {
       log.info(e.getMessage());
     } finally {
