@@ -63,7 +63,7 @@ public class ReadTest {
   public void readFromEFSSingleThread(String filePrefix) {
     Instant totalStart = Instant.now();
     for (int i = 0; i < FILE_AMOUNT; i++) {
-      readFromEFS(filePrefix + "_" + i);
+      readFromEFS(filePrefix + "_" + i, i);
     }
     System.out.println("read file from efs uses " + Duration.between(totalStart, Instant.now()).toMillis() + " ms\n");
   }
@@ -76,12 +76,12 @@ public class ReadTest {
                     i ->
                         CompletableFuture.runAsync(
                             () ->
-                                readFromEFS(filePrefix + "_" + i), executorService))
+                                readFromEFS(filePrefix + "_" + i, i), executorService))
                 .toArray(CompletableFuture[]::new))
         .join();
   }
 
-  private void readFromEFS(String filePrefix) {
+  private void readFromEFS(String filePrefix, int index) {
     Path sourcePathFromEFS = Paths.get(EFS_MOUNT_PATH, filePrefix + ".fcs");
     String fileName = sourcePathFromEFS.getFileName().toString();
     Instant start = Instant.now();
@@ -95,7 +95,7 @@ public class ReadTest {
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      log.info("read file from efs uses " + Duration.between(start, Instant.now()).toMillis() + " ms\n");
+      log.info(index + " - read file from efs uses " + Duration.between(start, Instant.now()).toMillis() + " ms\n");
     }
   }
 
@@ -135,7 +135,7 @@ public class ReadTest {
   public void readFromS3(String bucket, String keyPrefix, S3Transfer s3Transfer) {
     try {
       String fileName = keyPrefix + ".fcs";
-      s3Transfer.downloadFileMultiThread(bucket, S3_SECOND_PATH + "/" + fileName + ".fcs", Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
+      s3Transfer.downloadFileMultiThread(bucket, S3_SECOND_PATH + "/" + fileName, Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
