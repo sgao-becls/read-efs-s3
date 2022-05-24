@@ -5,6 +5,7 @@ import org.cytobank.aws.s3client.util.S3Transfer;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -89,9 +90,12 @@ public class ReadTest {
          FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(USER_HOME, EFS_TARGET_PATH, fileName).toFile())) {
       byte[] buffer = new byte[1024];
       int len;
+      int counter = 0;
       while ((len = fileInputStream.read(buffer)) > 0) {
-        fileOutputStream.write(buffer, 0, len);
+//        fileOutputStream.write(buffer, 0, len);
+        counter += len;
       }
+      log.info("file size is " + counter);
     } catch (IOException e) {
       log.info(e.getMessage());
     } finally {
@@ -137,9 +141,15 @@ public class ReadTest {
   }
 
   public void readFromS3(String bucket, String keyPrefix, S3Transfer s3Transfer) {
-    try {
-      String fileName = keyPrefix + ".fcs";
-      s3Transfer.downloadFileMultiThread(bucket, S3_SECOND_PATH + "/" + fileName, Paths.get(USER_HOME, S3_TARGET_PATH, fileName).toString());
+    String fileName = keyPrefix + ".fcs";
+    try (InputStream inputStream = s3Transfer.getS3ObjectMultiThreadInputStream(bucket, S3_SECOND_PATH + "/" + fileName)){
+      byte[] buffer = new byte[1024];
+      int len;
+      int counter = 0;
+      while ((len = inputStream.read(buffer)) > 0) {
+        counter += len;
+      }
+      log.info("file size is " + counter);
     } catch (IOException e) {
       log.info(e.getMessage());
     } finally {
