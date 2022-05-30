@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.logging.Logger;
 
-public class WriteTest {
+public class WriteTest extends MultipleThreadTest {
 
   private static final Logger log = Logger.getLogger(WriteTest.class.getName());
 
