@@ -17,13 +17,15 @@ public class TestHandler implements RequestHandler<Input, String> {
   @Override
   public String handleRequest(Input input, Context context) {
     if ("w".equalsIgnoreCase(input.getAction())) {
-     return null;
+      return null;
     } else if ("r".equalsIgnoreCase(input.getAction())) {
       ReadTest readTest = new ReadTest();
       if (input.isEfsEnabled()) {
+        log.info("Reading from efs");
         readTest.readFromEFSMultiple(input.getFilePrefix());
       }
       if (input.isS3Enabled()) {
+        log.info("Reading from s3");
         readTest.readFromS3Multiple("fcs-file-test-data", input.getFilePrefix());
       }
     } else {
