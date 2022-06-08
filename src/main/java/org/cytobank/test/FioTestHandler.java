@@ -22,12 +22,18 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
   public String handleRequest(FioInput input, Context context) {
     ProcessBuilder processBuilder = new ProcessBuilder();
 //    processBuilder.command("ls", "-l", "-a");
-    processBuilder.command("fio", "--name", "efs_test"
+    processBuilder.command("fio"
+        , "--name", input.getName()
         , "--filename", input.getFileName()
         , "--ioengine", input.getIoengine()
         , "--iodepth", input.getIodepth()
         , "--readwrite", input.getReadwrite()
         , "--rwmixread", input.getRwmixread()
+        , "--numjobs", input.getNumjobs()
+        , "--runtime", input.getRuntime()
+        , "--bs", input.getBs()
+        , "--nrfiles", input.getNrfiles()
+        , "--loops", input.getLoops()
         , "--size", input.getSize());
     StringBuilder output = new StringBuilder();
     try {
