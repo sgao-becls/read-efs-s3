@@ -2,10 +2,16 @@ package org.cytobank.test.dto;
 
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Data
 public class FioInput {
-  // Pointing to a file in testing device
-  String fileName;
+
+  // job name & filename
+  // fio --name=job1 --filename=/mnt/job1_file --name=job2 --filename=/mnt/job2_file
+  Map<String, String> jobAndFile = new HashMap<>();
 
   // io engine
   // - Linux native asynchronous I/O
@@ -26,14 +32,13 @@ public class FioInput {
   // test file size, ${nrfiles} files share 4G size
   String size = "4G";
 
-  // job name
-  String name = "lambda-efs-test";
+
   // job loop times
   String loops = "1";
   // The number of thread
-  String numjobs = "20";
-  // running time of current test, if not set the whole ${size} file will be processed
-  String runtime = "600";
+  String numjobs = "1";
+  // running time in second of current test, if not set the whole ${size} file will be processed
+  String runtime = "300";
   // block size, default is 4K
   String bs = "4k";
 
