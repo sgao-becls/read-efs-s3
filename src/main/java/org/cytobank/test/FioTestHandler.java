@@ -23,18 +23,7 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
   public String handleRequest(FioInput input, Context context) {
     log.info(GSON.toJson(input));
     ProcessBuilder processBuilder = new ProcessBuilder();
-//    processBuilder.command("ls", "-l", "-a");
-    StringBuilder jobAndFile = new StringBuilder();
-    input.getJobAndFile().entrySet().forEach(entry->{
-      jobAndFile.append("--name=");
-      jobAndFile.append(entry.getKey());
-      jobAndFile.append(" ");
-      jobAndFile.append("--filename=");
-      jobAndFile.append(entry.getValue());
-    });
-
     processBuilder.command("fio"
-        , jobAndFile.toString()
         , "--ioengine", input.getIoengine()
         , "--iodepth", input.getIodepth()
         , "--readwrite", input.getReadwrite()
@@ -45,7 +34,13 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
         , "--nrfiles", input.getNrfiles()
         , "--loops", input.getLoops()
         , "--size", input.getSize()
-        , "--group_reporting");
+        );
+    input.getJobAndFile().forEach((key, value) -> {
+      processBuilder.command().add("--name");
+      processBuilder.command().add(key);
+      processBuilder.command().add("--filename");
+      processBuilder.command().add(value);
+    });
     StringBuilder output = new StringBuilder();
     try {
       Process process = processBuilder.start();
