@@ -9,7 +9,17 @@ jobAndFile:
   job8: /home/ec2-user/efs/testfile_read_8
   job9: /home/ec2-user/efs/testfile_read_9
   job10: /home/ec2-user/efs/testfile_read_10
+  job11: /home/ec2-user/efs/testfile_read_11
+  job12: /home/ec2-user/efs/testfile_read_12
+  job13: /home/ec2-user/efs/testfile_read_13
+  job14: /home/ec2-user/efs/testfile_read_14
+  job15: /home/ec2-user/efs/testfile_read_15
+  job16: /home/ec2-user/efs/testfile_read_16
+  job17: /home/ec2-user/efs/testfile_read_17
+  job18: /home/ec2-user/efs/testfile_read_18
+  job19: /home/ec2-user/efs/testfile_read_19
+  job20: /home/ec2-user/efs/testfile_read_20
 readwrite: read
-size: 200M
+size: 500M
 runtime: 300
 numjobs: 1
