@@ -76,6 +76,7 @@
                  <version>2.6.5</version>
                  <configuration>
                      <mainClass>org.cytobank.test.App</mainClass>
+                     <excludeGroupIds>org.projectlombok</excludeGroupIds>
                  </configuration>
                  <executions>
                      <execution>
@@ -86,6 +87,15 @@
                  </executions>
              </plugin>
          </plugins>
+         <resources>
+             <resource>
+                 <targetPath>${build.directory}</targetPath>
+                 <directory>src/man/resources</directory>
+                 <includes>
+                     <include>*.yml</include>
+                 </includes>
+             </resource>
+         </resources>
      </build>
 
     <!--<build>

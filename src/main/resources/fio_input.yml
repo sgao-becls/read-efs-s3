@@ -1,15 +1,14 @@
 jobAndFile:
-  jobx: /Users/sgao/tmp/test_read
-#  job1: /mnt/channelstripe/testfile_read_1
-#  job2: /mnt/channelstripe/testfile_read_2
-#  job3: /mnt/channelstripe/testfile_read_3
-#  job4: /mnt/channelstripe/testfile_read_4
-#  job5: /mnt/channelstripe/testfile_read_5
-#  job6: /mnt/channelstripe/testfile_read_6
-#  job7: /mnt/channelstripe/testfile_read_7
-#  job8: /mnt/channelstripe/testfile_read_8
-#  job9: /mnt/channelstripe/testfile_read_9
-#  job10: /mnt/channelstripe/testfile_read_10
+  job1: /home/ec2-user/efs/testfile_read_1
+  job2: /home/ec2-user/efs/testfile_read_2
+  job3: /home/ec2-user/efs/testfile_read_3
+  job4: /home/ec2-user/efs/testfile_read_4
+  job5: /home/ec2-user/efs/testfile_read_5
+  job6: /home/ec2-user/efs/testfile_read_6
+  job7: /home/ec2-user/efs/testfile_read_7
+  job8: /home/ec2-user/efs/testfile_read_8
+  job9: /home/ec2-user/efs/testfile_read_9
+  job10: /home/ec2-user/efs/testfile_read_10
 readwrite: read
 size: 200M
 runtime: 300
