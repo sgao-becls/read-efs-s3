@@ -9,6 +9,7 @@ import org.cytobank.test.dto.FioInput;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -35,12 +36,26 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
         , "--loops", input.getLoops()
         , "--size", input.getSize()
         );
+    final List<String> command = processBuilder.command();
     input.getJobAndFile().forEach((key, value) -> {
-      processBuilder.command().add("--name");
-      processBuilder.command().add(key);
-      processBuilder.command().add("--filename");
-      processBuilder.command().add(value);
+      command.add("--name");
+      command.add(key);
+      command.add("--filename");
+      command.add(value);
     });
+
+    StringBuilder commandline = new StringBuilder();
+    command.forEach(c->{
+      if(c.startsWith("--")) {
+        commandline.append(c);
+        commandline.append("=");
+      } else {
+        commandline.append(c);
+        commandline.append(" ");
+      }
+    });
+    System.out.println(commandline);
+
     StringBuilder output = new StringBuilder();
     try {
       Process process = processBuilder.start();

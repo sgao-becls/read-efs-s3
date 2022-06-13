@@ -1,36 +1,21 @@
 package org.cytobank.test;
 
+import org.cytobank.test.dto.FioInput;
+import org.cytobank.test.util.PropertiesUtils;
+
 import java.util.logging.Logger;
 
 public class App {
 
   private static final Logger log = Logger.getLogger(App.class.getName());
+  private static final String CONFIG_FILE = "fio_input.yml";
 
   public static void main(String[] args) {
-    String action = args[0];
-    String bucket = args[1];
-    String filePrefix = args[2];
-
-    ReadTest readTest = new ReadTest();
-    if(action.equalsIgnoreCase("w")) {
-//      WriteTest uploadTest = new WriteTest();
-//      uploadTest.writeToEFS(filePrefix);
-//      uploadTest.writeToS3(bucket, filePrefix, filePrefix);
-    } else if(action.equalsIgnoreCase("r")) {
-
-      readTest.readFromEFSMultiple(filePrefix);
-      readTest.readFromS3Multiple(bucket, filePrefix);
-    } else if(action.equalsIgnoreCase("r1")) {
-      readTest.readFromEFSSingleThread(filePrefix);
-      readTest.readFromS3SingleThread(bucket, filePrefix);
-    } else {
-      return;
-    }
-
-
-    log.info("Done!!");
-
-    log.info("Hello world");
+    log.info("fio start!");
+    FioInput fioInput = PropertiesUtils.loadProperties(FioInput.class, CONFIG_FILE);
+    FioTestHandler fioTestHandler = new FioTestHandler();
+    fioTestHandler.handleRequest(fioInput, null);
+    log.info("fio done!");
   }
 
 }

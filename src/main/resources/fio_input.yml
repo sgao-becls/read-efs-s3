@@ -1,0 +1,16 @@
+jobAndFile:
+  jobx: /Users/sgao/tmp/test_read
+#  job1: /mnt/channelstripe/testfile_read_1
+#  job2: /mnt/channelstripe/testfile_read_2
+#  job3: /mnt/channelstripe/testfile_read_3
+#  job4: /mnt/channelstripe/testfile_read_4
+#  job5: /mnt/channelstripe/testfile_read_5
+#  job6: /mnt/channelstripe/testfile_read_6
+#  job7: /mnt/channelstripe/testfile_read_7
+#  job8: /mnt/channelstripe/testfile_read_8
+#  job9: /mnt/channelstripe/testfile_read_9
+#  job10: /mnt/channelstripe/testfile_read_10
+readwrite: read
+size: 200M
+runtime: 300
+numjobs: 1
