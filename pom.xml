@@ -90,7 +90,7 @@
          <resources>
              <resource>
                  <targetPath>${build.directory}</targetPath>
-                 <directory>src/man/resources</directory>
+                 <directory>src/main/resources</directory>
                  <includes>
                      <include>*.yml</include>
                  </includes>
