@@ -3,7 +3,6 @@ package org.cytobank.test.dto;
 import lombok.Data;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Data
@@ -44,6 +43,8 @@ public class FioInput {
 
   // Lock memory, can only use 10G RAM; we have not used it so far.
   String lockmem = "10G";
+
+  boolean thread = true;
 
   // number of test files
   String nrfiles = "1";

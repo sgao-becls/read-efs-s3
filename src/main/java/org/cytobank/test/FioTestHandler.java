@@ -54,6 +54,10 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
         commandline.append(" ");
       }
     });
+
+    if(input.isThread()) {
+      commandline.append("--thread");
+    }
     System.out.println(commandline);
 
     StringBuilder output = new StringBuilder();
