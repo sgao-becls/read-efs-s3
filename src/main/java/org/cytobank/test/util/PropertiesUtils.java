@@ -3,7 +3,6 @@ package org.cytobank.test.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -23,8 +22,8 @@ public class PropertiesUtils {
    */
   public static <T> T loadProperties(Class<T> clazz, String yml) {
     try {
-      InputStream inputStream = new FileInputStream("./" + yml);
-//      InputStream inputStream = clazz.getResourceAsStream("/" + yml);
+//      InputStream inputStream = new FileInputStream("./" + yml);
+      InputStream inputStream = clazz.getResourceAsStream("/" + yml);
       return mapper.readValue(inputStream, clazz);
     } catch (IOException e) {
       e.printStackTrace();
