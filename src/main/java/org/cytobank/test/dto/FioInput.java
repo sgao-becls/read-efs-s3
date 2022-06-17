@@ -49,4 +49,15 @@ public class FioInput {
   // number of test files
   String nrfiles = "1";
 
+  // target directory for testing
+  String directory;
+
+  // job name
+  String name = "test_job";
+
+  // target file name for testing
+  String filename;
+
+  // command line
+  String commandline;
 }
