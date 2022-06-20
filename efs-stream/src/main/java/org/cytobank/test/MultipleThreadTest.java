@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class MultipleThreadTest {
+public abstract class MultipleThreadTest {
 
   @Getter
   private final ExecutorService executorService;
