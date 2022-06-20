@@ -30,22 +30,18 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
         , "--ioengine", input.getIoengine()
         , "--iodepth", input.getIodepth()
         , "--readwrite", input.getReadwrite()
-        , "--rwmixread", input.getRwmixread()
         , "--numjobs", input.getNumjobs()
-        , "--runtime", input.getRuntime()
         , "--bs", input.getBs()
-        , "--nrfiles", input.getNrfiles()
-        , "--loops", input.getLoops()
-        , "--size", input.getSize()
         , "--filesize", input.getFilesize()
         , "--directory", input.getDirectory()
+        , "--name", input.getName()
     );
     final List<String> command = processBuilder.command();
-    input.getJobAndFile().forEach((key, value) -> {
-      command.add("--name");
+    input.getOtherArguments().forEach((key, value)->{
       command.add(key);
-      command.add("--filename");
-      command.add(value);
+      if(Objects.nonNull(value) && !value.isBlank()) {
+        command.add(value);
+      }
     });
     if (input.isThread()) {
       command.add("--thread");
@@ -94,7 +90,7 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    System.out.println(output);
+    log.info(output.toString());
     return output.toString();
   }
 }

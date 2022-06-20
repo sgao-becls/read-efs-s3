@@ -14,8 +14,8 @@ popd
 #aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com
 # Use following ecr syntax for aws cli version 2
 aws ecr get-login-password --region $AWS_REGION --profile $AWS_PROFILE | docker login -u AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com
-docker build -t read-efs-s3 . --progress=plain --no-cache
-docker tag read-efs-s3:latest $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/read-efs-s3:latest
-#docker tag read-efs-s3:latest $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/read-efs-s3:$DATE_STAMP
-docker push $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/read-efs-s3:latest
-#docker push $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/read-efs-s3:$DATE_STAMP
+docker build -t efs-apigw . --progress=plain --no-cache
+docker tag efs-apigw:latest $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/efs-apigw:latest
+#docker tag efs-apigw:latest $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/efs-apigw:$DATE_STAMP
+docker push $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/efs-apigw:latest
+#docker push $AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com/efs-apigw:$DATE_STAMP
