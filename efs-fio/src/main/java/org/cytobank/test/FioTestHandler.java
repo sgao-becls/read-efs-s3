@@ -37,6 +37,8 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
         , "--nrfiles", input.getNrfiles()
         , "--loops", input.getLoops()
         , "--size", input.getSize()
+        , "--filesize", input.getFilesize()
+        , "--directory", input.getDirectory()
     );
     final List<String> command = processBuilder.command();
     input.getJobAndFile().forEach((key, value) -> {
@@ -45,29 +47,32 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
       command.add("--filename");
       command.add(value);
     });
-
-    StringBuilder commandline = new StringBuilder();
-    command.forEach(c -> {
-      if (c.startsWith("--")) {
-        commandline.append(c);
-        commandline.append("=");
-      } else {
-        commandline.append(c);
-        commandline.append(" ");
-      }
-    });
-
     if (input.isThread()) {
-      commandline.append("--thread");
+      command.add("--thread");
     }
-    System.out.println(commandline);
 
     StringBuilder output = new StringBuilder();
     try {
       Process process;
       if (Objects.isNull(input.getCommandline()) || input.getCommandline().isEmpty()) {
+        StringBuilder commandline = new StringBuilder();
+        command.forEach(c -> {
+          if (c.startsWith("--")) {
+            commandline.append(c);
+            commandline.append("=");
+          } else {
+            commandline.append(c);
+            commandline.append(" ");
+          }
+        });
+
+        if (input.isThread()) {
+          commandline.append("--thread");
+        }
+        System.out.println(commandline);
         process = processBuilder.start();
       } else {
+        System.out.println(input.getCommandline());
         process = Runtime.getRuntime().exec(input.getCommandline());
       }
       BufferedReader reader = new BufferedReader(

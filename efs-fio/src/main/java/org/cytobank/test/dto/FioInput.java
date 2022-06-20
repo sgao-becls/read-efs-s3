@@ -31,6 +31,8 @@ public class FioInput {
   // test file size, ${nrfiles} files share 4G size
   String size = "4G";
 
+  // set file size for each job
+  String filesize = "32M";
 
   // job loop times
   String loops = "1";
