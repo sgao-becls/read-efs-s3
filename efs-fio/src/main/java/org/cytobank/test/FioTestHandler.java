@@ -52,15 +52,17 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
       Process process;
       if (Objects.isNull(input.getCommandline()) || input.getCommandline().isEmpty()) {
         StringBuilder commandline = new StringBuilder();
-        command.forEach(c -> {
-          if (c.startsWith("--")) {
-            commandline.append(c);
-            commandline.append("=");
-          } else {
-            commandline.append(c);
-            commandline.append(" ");
-          }
-        });
+        if(Objects.nonNull(command)) {
+          command.forEach(c -> {
+            if (c.startsWith("--")) {
+              commandline.append(c);
+              commandline.append("=");
+            } else {
+              commandline.append(c);
+              commandline.append(" ");
+            }
+          });
+        }
 
         if (input.isThread()) {
           commandline.append("--thread");

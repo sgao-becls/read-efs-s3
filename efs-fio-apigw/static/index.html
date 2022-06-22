@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fio test</title>
+    <link rel="shortcut icon" href="#">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <form id="test_form">
+        <div class="col-md-4">
+            <label for="file_name_prefix" class="form-label">File name prefix</label>
+            <input type="text" class="form-control" id="file_name_prefix" name="file_name_prefix" value="fio_test">
+        </div>
+        <div class="col-md-4">
+            <label for="block_size" class="form-label">Block Size</label>
+            <input type="text" class="form-control" id="block_size" name="block_size" value="4K">
+        </div>
+        <div class="col-md-4">
+            <label for="directory" class="form-label">Directory</label>
+            <input type="text" class="form-control" id="directory" name="directory" value="/mnt/channelstripe">
+        </div>
+        <div class="col-md-4">
+            <label for="file_size" class="form-label">File Size</label>
+            <input type="text" class="form-control" id="file_size" name="file_size" value="5M">
+        </div>
+        <div class="col-md-4">
+            <label for="threads" class="form-label">How many threads in each lambda?</label>
+            <input type="text" class="form-control" id="threads" name="threads" value="1">
+        </div>
+        <div class="col-md-4">
+            <label for="lambdas" class="form-label">How many lambdas run?</label>
+            <input type="text" class="form-control" id="lambdas" name="lambdas" value="1">
+        </div>
+    </form>
+    <div class="col-md-4">
+        <button type="button" id="post" class="btn btn-primary">POST</button>
+    </div>
+    <div class="col-md-4">
+        <div id="s_message"></div>
+        <div id="e_message"></div>
+    </div>
+
+    <a href="https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fsong-efs-apigw" target="_blank">logs</a>
+</div>
+</body>
+<script>
+    function objectifyForm(formArray) {
+        let returnArray = {};
+        for (let i = 0; i < formArray.length; i++) {
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+        return returnArray;
+    }
+</script>
+<script>
+    let counter = 0;
+    let e_counter = 0;
+    function sendAjax(data, retried=false) {
+        $.ajax({
+            url: "https://jqvy9rl2gc.execute-api.us-west-2.amazonaws.com/public-dev/plot-test",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                counter++;
+                $("#s_message").html(counter + " done!<br>");
+                if(retried) {
+                    e_counter--;
+                    $("#e_message").html(e_counter + " error!<br>");
+                }
+            },
+            error: function() {
+                e_counter++;
+                $("#e_message").html(e_counter + " error!<br>");
+                setTimeout(sendAjax(data, true), 1000);
+            }
+        });
+    }
+    $("#post").click(
+        function () {
+            $("#message").html("")
+            let formData = objectifyForm($("#test_form").serializeArray());
+            let data = {
+                "commandline": "fio --name="
+                    + formData.file_name_prefix
+                    + " --bs="
+                    + formData.block_size
+                    + " --directory="
+                    + formData.directory
+                    + " --filesize="
+                    + formData.file_size
+                    + " --numjobs="
+                    + formData.threads
+                    + " --thread"
+            };
+            console.log(data);
+            for (let i = 1; i <= formData.lambdas; i++) {
+                sendAjax(data, false);
+            }
+            counter = 0;
+            e_counter = 0;
+        }
+    );
+</script>
+</html>
