@@ -11,7 +11,7 @@ public class FioInput {
   // command line
   String commandline;
   // how many times do the commandline run?
-  int times = 0;
+  int times = 1;
 
   // target directory for testing
   String directory;
