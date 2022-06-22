@@ -36,6 +36,10 @@
             <input type="text" class="form-control" id="threads" name="threads" value="1">
         </div>
         <div class="col-md-4">
+            <label for="times" class="form-label">How many times does the FIO commandline runs in each lambda?</label>
+            <input type="text" class="form-control" id="times" name="times" value="1">
+        </div>
+        <div class="col-md-4">
             <label for="lambdas" class="form-label">How many lambdas run?</label>
             <input type="text" class="form-control" id="lambdas" name="lambdas" value="1">
         </div>
@@ -46,9 +50,11 @@
     <div class="col-md-4">
         <div id="s_message"></div>
         <div id="e_message"></div>
+        <div id="re_message"></div>
     </div>
 
-    <a href="https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fsong-efs-apigw" target="_blank">logs</a>
+    <a href="https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fsong-efs-apigw"
+       target="_blank">logs</a>
 </div>
 </body>
 <script>
@@ -63,7 +69,9 @@
 <script>
     let counter = 0;
     let e_counter = 0;
-    function sendAjax(data, retried=false) {
+    let retry_counter = 0;
+
+    function sendAjax(data, retried = false) {
         $.ajax({
             url: "https://jqvy9rl2gc.execute-api.us-west-2.amazonaws.com/public-dev/plot-test",
             type: "POST",
@@ -73,34 +81,36 @@
             success: function () {
                 counter++;
                 $("#s_message").html(counter + " done!<br>");
-                if(retried) {
+                if (retried) {
                     e_counter--;
                     $("#e_message").html(e_counter + " error!<br>");
                 }
             },
-            error: function() {
-                e_counter++;
-                $("#e_message").html(e_counter + " error!<br>");
+            error: function () {
+                if (!retried) {
+                    e_counter++;
+                    $("#e_message").html(e_counter + " error!<br>");
+                }
+                retry_counter++;
+                $("#re_message").html("Retried totally " + retry_counter + " times!<br>");
                 setTimeout(sendAjax(data, true), 1000);
             }
         });
     }
+
     $("#post").click(
         function () {
-            $("#message").html("")
+            $("#s_message").html("")
+            $("#e_message").html("")
+            $("#re_message").html("")
             let formData = objectifyForm($("#test_form").serializeArray());
             let data = {
-                "commandline": "fio --name="
-                    + formData.file_name_prefix
-                    + " --bs="
-                    + formData.block_size
-                    + " --directory="
-                    + formData.directory
-                    + " --filesize="
-                    + formData.file_size
-                    + " --numjobs="
-                    + formData.threads
-                    + " --thread"
+                "name": formData.file_name_prefix,
+                "bs": formData.block_size,
+                "directory": formData.directory,
+                "filesize": formData.file_size,
+                "numjobs": formData.threads,
+                "times": formData.times
             };
             console.log(data);
             for (let i = 1; i <= formData.lambdas; i++) {
@@ -108,6 +118,7 @@
             }
             counter = 0;
             e_counter = 0;
+            retry_counter = 0;
         }
     );
 </script>

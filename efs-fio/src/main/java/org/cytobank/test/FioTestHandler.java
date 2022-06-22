@@ -37,60 +37,60 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
         , "--name", input.getName()
     );
     final List<String> command = processBuilder.command();
-    input.getOtherArguments().forEach((key, value)->{
+    input.getOtherArguments().forEach((key, value) -> {
       command.add(key);
-      if(Objects.nonNull(value) && !value.isBlank()) {
+      if (Objects.nonNull(value) && !value.isBlank()) {
         command.add(value);
       }
     });
-    if (input.isThread()) {
-      command.add("--thread");
-    }
 
     StringBuilder output = new StringBuilder();
-    try {
-      Process process;
-      if (Objects.isNull(input.getCommandline()) || input.getCommandline().isEmpty()) {
-        StringBuilder commandline = new StringBuilder();
-        if(Objects.nonNull(command)) {
-          command.forEach(c -> {
-            if (c.startsWith("--")) {
-              commandline.append(c);
-              commandline.append("=");
-            } else {
-              commandline.append(c);
-              commandline.append(" ");
-            }
-          });
+    for (int i = 0; i < input.getTimes(); i++) {
+      log.info(String.format("run %d times", i));
+      try {
+        Process process;
+        if (Objects.isNull(input.getCommandline()) || input.getCommandline().isEmpty()) {
+          StringBuilder commandline = new StringBuilder();
+          if (Objects.nonNull(command)) {
+            command.forEach(c -> {
+              if (c.startsWith("--")) {
+                commandline.append(c);
+                commandline.append("=");
+              } else {
+                commandline.append(c);
+                commandline.append(" ");
+              }
+            });
+          }
+
+          if (input.isThread()) {
+            commandline.append("--thread");
+          }
+          log.info(commandline.toString());
+          process = processBuilder.start();
+        } else {
+          log.info(input.getCommandline());
+          process = Runtime.getRuntime().exec(input.getCommandline());
+        }
+        BufferedReader reader = new BufferedReader(
+            new InputStreamReader(process.getInputStream()));
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+          output.append(line + "\n");
         }
 
-        if (input.isThread()) {
-          commandline.append("--thread");
+        int exitVal = process.waitFor();
+        if (exitVal == 0) {
+          log.info("Success!!");
+        } else {
+          log.info("exit with code " + exitVal);
         }
-        System.out.println(commandline);
-        process = processBuilder.start();
-      } else {
-        System.out.println(input.getCommandline());
-        process = Runtime.getRuntime().exec(input.getCommandline());
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
-      BufferedReader reader = new BufferedReader(
-          new InputStreamReader(process.getInputStream()));
-
-      String line;
-      while ((line = reader.readLine()) != null) {
-        output.append(line + "\n");
-      }
-
-      int exitVal = process.waitFor();
-      if (exitVal == 0) {
-        log.info("Success!!");
-      } else {
-        log.info("exit with code " + exitVal);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
     }
     log.info(output.toString());
     return output.toString();
