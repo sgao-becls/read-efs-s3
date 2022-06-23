@@ -26,14 +26,14 @@ public class App {
   private static AWSLambda awsLambda;
 
   public static void main(String[] args) {
-    final int lambdas = 1;
+    final int lambdas = 840;
     String functionName = "song-efs-apigw";
     FioInput fioInput = new FioInput();
     fioInput.setName("test_job");
     fioInput.setDirectory("/mnt/channelstripe");
-    fioInput.setBs("4K");
-    fioInput.setFilesize("157K");
-    fioInput.setNumjobs("600");
+    fioInput.setBs("1M");
+    fioInput.setFilesize("40M");
+    fioInput.setNumjobs("21");
     fioInput.setTimes(1);
     InvokeRequest invokeRequest = new InvokeRequest()
         .withFunctionName(functionName)
@@ -63,16 +63,15 @@ public class App {
   }
 
   private static void invokeLambda(InvokeRequest invokeRequest) {
-    Instant start = Instant.now();
+//    Instant start = Instant.now();
     InvokeResult invokeResult = awsLambda.invoke(invokeRequest);
 
     String ans = new String(invokeResult.getPayload().array(), StandardCharsets.UTF_8);
 
-    //write out the return value
     InvokeResultObject invokeResultObject = GSON.fromJson(ans, InvokeResultObject.class);
     if(200 == invokeResultObject.getStatusCode()) {
-      System.out.println(invokeResultObject.getBody());
-      System.out.println("uses " + Duration.between(start, Instant.now()).toMillis() + "ms");
+//      System.out.println(invokeResultObject.getBody());
+//      System.out.println("uses " + Duration.between(start, Instant.now()).toMillis() + "ms");
     } else {
       System.out.println("ERROR");
     }

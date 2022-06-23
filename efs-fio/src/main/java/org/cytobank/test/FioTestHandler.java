@@ -46,7 +46,7 @@ public class FioTestHandler implements RequestHandler<FioInput, String> {
 
     StringBuilder output = new StringBuilder();
     for (int i = 0; i < input.getTimes(); i++) {
-      log.info(String.format("run %d times", i));
+      log.info(String.format("run %d times", i + 1));
       try {
         Process process;
         if (Objects.isNull(input.getCommandline()) || input.getCommandline().isEmpty()) {
