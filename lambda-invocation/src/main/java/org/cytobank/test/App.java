@@ -26,14 +26,14 @@ public class App {
   private static AWSLambda awsLambda;
 
   public static void main(String[] args) {
-    final int lambdas = 840;
+    final int lambdas = 500;
     String functionName = "song-efs-apigw";
     FioInput fioInput = new FioInput();
     fioInput.setName("test_job");
     fioInput.setDirectory("/mnt/channelstripe");
-    fioInput.setBs("1M");
-    fioInput.setFilesize("40M");
-    fioInput.setNumjobs("21");
+    fioInput.setBs("4K");
+    fioInput.setFilesize("157K");
+    fioInput.setNumjobs("10");
     fioInput.setTimes(1);
     InvokeRequest invokeRequest = new InvokeRequest()
         .withFunctionName(functionName)
@@ -42,7 +42,7 @@ public class App {
         .withCredentials(new ProfileCredentialsProvider())
         .withRegion(Regions.US_WEST_2).build();
 
-    ExecutorService executorService = Executors.newFixedThreadPool(100);
+    ExecutorService executorService = Executors.newFixedThreadPool(200);
     Instant start = Instant.now();
     try {
       CompletableFuture.allOf(IntStream.range(0, lambdas).boxed()
