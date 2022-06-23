@@ -26,7 +26,7 @@ public class App {
   private static AWSLambda awsLambda;
 
   public static void main(String[] args) {
-    final int lambdas = 500;
+    final int lambdas = 1000;
     String functionName = "song-efs-apigw";
     FioInput fioInput = new FioInput();
     fioInput.setName("test_job");
@@ -42,7 +42,7 @@ public class App {
         .withCredentials(new ProfileCredentialsProvider())
         .withRegion(Regions.US_WEST_2).build();
 
-    ExecutorService executorService = Executors.newFixedThreadPool(200);
+    ExecutorService executorService = Executors.newFixedThreadPool(500);
     Instant start = Instant.now();
     try {
       CompletableFuture.allOf(IntStream.range(0, lambdas).boxed()
