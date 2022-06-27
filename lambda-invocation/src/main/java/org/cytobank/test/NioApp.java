@@ -24,8 +24,10 @@ public class NioApp {
 
   private static AWSLambda awsLambda;
 
+  private static NioConfig nioConfig;
+
   public static void main(String[] args) {
-    NioConfig nioConfig = PropertiesUtils.loadProperties(NioConfig.class, "config.yml");
+    nioConfig = PropertiesUtils.loadProperties(NioConfig.class, "config.yml");
     NioInput nioInput = nioConfig.getActiveNioInput();
     String functionName = nioConfig.getFunctionName();
     System.out.println(GSON.toJson(nioInput));
@@ -49,19 +51,19 @@ public class NioApp {
                           executorService)).toArray(CompletableFuture[]::new))
           .join();
     } catch (ServiceException e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
     System.out.println("Totally uses " + Duration.between(start, Instant.now()).toMillis() + "ms");
-    System.out.println("done!!");
-    System.exit(0);
+    executorService.shutdownNow();
   }
 
   private static void invokeLambda(InvokeRequest invokeRequest) {
-//    Instant start = Instant.now();
+    Instant start = Instant.now();
     InvokeResult invokeResult = awsLambda.invoke(invokeRequest);
     if (200 == invokeResult.getStatusCode()) {
-//      System.out.println(invokeResultObject.getBody());
-//      System.out.println("uses " + Duration.between(start, Instant.now()).toMillis() + "ms");
+      if(nioConfig.log) {
+      System.out.println("uses " + Duration.between(start, Instant.now()).toMillis() + "ms");
+      }
     } else {
       System.out.println("ERROR");
     }

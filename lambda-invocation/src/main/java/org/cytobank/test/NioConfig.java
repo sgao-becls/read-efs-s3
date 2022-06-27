@@ -14,6 +14,8 @@ public class NioConfig {
 
   Map<String, NioInput> inputMap = new HashMap<>();
 
+  boolean log;
+
   public NioInput getActiveNioInput() {
     return inputMap.get(active);
   }

@@ -36,3 +36,4 @@ inputMap:
     numThreads: 21
     directory: /home/ec2-user/efs
     bufferSize: 5120
+log: false
