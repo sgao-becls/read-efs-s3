@@ -1,5 +1,6 @@
 package org.cytobank.test.service;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -7,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +19,7 @@ import java.util.stream.IntStream;
  * Recording log costs time.
  */
 
-public class NioService {
+public class NioService implements Closeable {
 
   private static final Logger log = Logger.getLogger(NioService.class.getName());
   private final int bufferSize;
@@ -42,7 +44,7 @@ public class NioService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    System.out.printf("Totally uses %dms", Duration.between(start, Instant.now()).toMillis());
+    System.out.println(String.format("Totally uses %dms", Duration.between(start, Instant.now()).toMillis()));
   }
 
   public void readFileSequentially(Path path, int index) {
@@ -66,7 +68,14 @@ public class NioService {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    System.out.printf("%d thread - file size: %dbytes, uses: %dms", index, fileSize, Duration.between(start, Instant.now()).toMillis());
+    System.out.println(String.format("%d thread - file size: %dbytes, uses: %dms\n", index, fileSize, Duration.between(start, Instant.now()).toMillis()));
+  }
+
+  @Override
+  public void close() {
+    if(Objects.nonNull(executorService)) {
+      executorService.shutdownNow();
+    }
   }
 
 }

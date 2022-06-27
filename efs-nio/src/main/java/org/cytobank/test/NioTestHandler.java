@@ -21,12 +21,15 @@ public class NioTestHandler implements RequestHandler<Input, String> {
   @Override
   public String handleRequest(Input input, Context context) {
     System.out.println(GSON.toJson(input));
+    System.out.println(input.getNumFiles());
     Path[] stripeFilePaths = new Path[input.getNumFiles()];
     for (int i = 0; i < input.getNumFiles(); i++) {
       stripeFilePaths[i] = Path.of(input.getDirectory(), String.format("%s.%d", input.getNamePrefix(), i));
+      System.out.println(String.format("%d file path: %s", i, stripeFilePaths[i]));
     }
-    NioService nioService = new NioService(input.getNumThreads(), input.getBufferSize());
-    nioService.multipleReadFileSequentially(stripeFilePaths);
+    try (NioService nioService = new NioService(input.getNumThreads(), input.getBufferSize())) {
+      nioService.multipleReadFileSequentially(stripeFilePaths);
+    }
     return "success";
   }
 }

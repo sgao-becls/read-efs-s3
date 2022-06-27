@@ -21,6 +21,10 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-lambda</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -31,7 +35,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.6.5</version>
                 <configuration>
-                    <mainClass>org.cytobank.test.App</mainClass>
+                    <mainClass>org.cytobank.test.NioApp</mainClass>
                     <excludeGroupIds>org.projectlombok</excludeGroupIds>
                 </configuration>
                 <executions>
@@ -43,5 +47,14 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <targetPath>${build.directory}</targetPath>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*.yml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>
