@@ -17,21 +17,21 @@ inputMap:
     bufferSize: 5120
   800_channel_1_file:
     numLambdas: 2400
-    namePrefix: four_384_well_plates
+    namePrefix: 800_channel_1_file
     numFiles: 600
     numThreads: 50
     directory: /home/ec2-user/efs
     bufferSize: 5120
   large_amgen:
     numLambdas: 3960
-    namePrefix: four_384_well_plates
+    namePrefix: large_amgen
     numFiles: 1
     numThreads: 1
     directory: /home/ec2-user/efs
     bufferSize: 5120
   5m_events:
     numLambdas: 840
-    namePrefix: four_384_well_plates
+    namePrefix: 5m_events
     numFiles: 21
     numThreads: 21
     directory: /home/ec2-user/efs
