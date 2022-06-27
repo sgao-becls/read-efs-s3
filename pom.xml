@@ -13,6 +13,7 @@
         <module>efs-stream</module>
         <module>efs-fio-apigw</module>
         <module>lambda-invocation</module>
+        <module>efs-nio</module>
     </modules>
 
     <properties>
