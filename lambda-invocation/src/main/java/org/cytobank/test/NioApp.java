@@ -56,7 +56,7 @@ public class NioApp {
       e.printStackTrace();
     }
     long duration = Duration.between(start, Instant.now()).toMillis();
-    System.out.println(String.format("total duration: %dms", duration));
+    System.out.println(String.format("Aggregated duration: %dms", duration));
     executorService.shutdownNow();
   }
 

@@ -32,9 +32,10 @@ public class NioService implements Closeable {
   }
 
   public void multipleReadFileSequentially(Path[] path) {
+    int len = path.length;
     Instant start = Instant.now();
     try {
-      CompletableFuture.allOf(IntStream.range(0, path.length).boxed()
+      CompletableFuture.allOf(IntStream.range(0, len).boxed()
               .map(
                   index ->
                       CompletableFuture.runAsync(
@@ -44,7 +45,8 @@ public class NioService implements Closeable {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    System.out.println(String.format("Totally uses %dms", Duration.between(start, Instant.now()).toMillis()));
+    long duration = Duration.between(start, Instant.now()).toMillis();
+    System.out.println(String.format("Aggregated duration %dms", duration));
   }
 
   public void readFileSequentially(Path path, int index) {
@@ -68,7 +70,8 @@ public class NioService implements Closeable {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    System.out.println(String.format("%d thread - file size: %dbytes, uses: %dms\n", index, fileSize, Duration.between(start, Instant.now()).toMillis()));
+    long duration = Duration.between(start, Instant.now()).toMillis();
+    System.out.println(String.format("%d thread - file size: %dbytes, duration: %dms, throughput: %dKB/s\n", index, fileSize, duration, fileSize / 1024 / duration * 1000));
   }
 
   @Override
