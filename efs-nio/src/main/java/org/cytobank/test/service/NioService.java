@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
@@ -25,10 +26,14 @@ public class NioService implements Closeable {
   private final int bufferSize;
 
   private final ExecutorService executorService;
+  private final AtomicInteger totalFileSize;
+  private final AtomicInteger totalThroughput;
 
   public NioService(int nThreads, int bufferSize) {
     executorService = Executors.newFixedThreadPool(nThreads);
     this.bufferSize = bufferSize;
+    totalFileSize = new AtomicInteger(0);
+    totalThroughput = new AtomicInteger(0);
   }
 
   public void multipleReadFileSequentially(Path[] path) {
@@ -46,7 +51,7 @@ public class NioService implements Closeable {
       e.printStackTrace();
     }
     long duration = Duration.between(start, Instant.now()).toMillis();
-    System.out.println(String.format("Aggregated duration %dms", duration));
+    System.out.println(String.format("Aggregated duration %dms, filesize: %dKB, throughput: %dKB/s", duration, totalFileSize.get(), totalThroughput.get()));
   }
 
   public void readFileSequentially(Path path, int index) {
@@ -72,7 +77,11 @@ public class NioService implements Closeable {
     }
     long durationTemp = Duration.between(start, Instant.now()).toNanos();
     long duration = durationTemp == 0l ? 1l : durationTemp;
-    System.out.println(String.format("%d thread - file size: %.2fKB, duration: %.2fms, throughput: %.2fKB/s\n", index, fileSize / 1024d, duration / 1000d / 1000d, fileSize * 1000 * 1000 * 1000d / 1024 / duration));
+    Double fileSizeKB = fileSize / 1024d;
+    Double throughput = fileSize / 1024d * 1000 * 1000 * 1000 / duration;
+    totalThroughput.getAndAdd(throughput.intValue());
+    totalFileSize.getAndAdd(fileSizeKB.intValue());
+    System.out.println(String.format("%d thread - file size: %.2fKB, duration: %.2fms, throughput: %.2fKB/s\n", index, fileSizeKB, duration / 1000d / 1000d, throughput));
   }
 
   @Override
