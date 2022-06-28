@@ -64,20 +64,20 @@ public class NioService implements Closeable {
 //            System.out.printf("  %f\n", doubleBuffer.get());
 //          }
 //        }
-        buffer.rewind();
+//        buffer.rewind();
 //        doubleBuffer.rewind();
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
-    long durationTemp = Duration.between(start, Instant.now()).toMillis();
-    long duration = durationTemp == 0l?1l:durationTemp;
-    System.out.println(String.format("%d thread - file size: %dbytes, duration: %dms, throughput: %dKB/s\n", index, fileSize, duration, fileSize / 1024 / duration * 1000));
+    long durationTemp = Duration.between(start, Instant.now()).toNanos();
+    long duration = durationTemp == 0l ? 1l : durationTemp;
+    System.out.println(String.format("%d thread - file size: %dbytes, duration: %dms, throughput: %dKB/s\n", index, fileSize, duration, fileSize * 1000 * 1000 * 1000 / 1024 / duration));
   }
 
   @Override
   public void close() {
-    if(Objects.nonNull(executorService)) {
+    if (Objects.nonNull(executorService)) {
       executorService.shutdownNow();
     }
   }

@@ -40,7 +40,7 @@ public class NioApp {
         .withCredentials(new ProfileCredentialsProvider())
         .withRegion(Regions.US_WEST_2).build();
 
-    ExecutorService executorService = Executors.newFixedThreadPool(500);
+    ExecutorService executorService = Executors.newFixedThreadPool(nioConfig.getLambdaInvocationPoolSize());
     Instant start = Instant.now();
     try {
       CompletableFuture.allOf(IntStream.range(0, nioInput.getNumLambdas()).boxed()
@@ -65,8 +65,8 @@ public class NioApp {
     InvokeResult invokeResult = awsLambda.invoke(invokeRequest);
     long duration = Duration.between(start, Instant.now()).toMillis();
     if (200 == invokeResult.getStatusCode()) {
-      if(nioConfig.log) {
-        System.out.println(String.format("duration: %dms, throughput: %dKB/s", duration, 1000 * nioInput.getFileSize() * nioInput.getNumFiles() /duration));
+      if (nioConfig.log) {
+        System.out.println(String.format("duration: %dms, throughput: %dKB/s", duration, 1000 * nioInput.getFileSize() * nioInput.getNumThreads() / duration));
       }
     } else {
       System.out.println("ERROR");

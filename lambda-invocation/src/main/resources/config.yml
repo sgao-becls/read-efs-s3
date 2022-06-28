@@ -42,3 +42,4 @@ inputMap:
     bufferSize: 5120
     fileSize: 40960
 log: true
+lambdaInvocationPoolSize: 100

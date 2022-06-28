@@ -15,8 +15,11 @@ public class NioConfig {
   Map<String, NioInput> inputMap = new HashMap<>();
 
   boolean log;
+  
+  int lambdaInvocationPoolSize;
 
   public NioInput getActiveNioInput() {
     return inputMap.get(active);
   }
+
 }
