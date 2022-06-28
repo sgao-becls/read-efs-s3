@@ -26,9 +26,11 @@ public class NioApp {
 
   private static NioConfig nioConfig;
 
+  private static NioInput nioInput;
+
   public static void main(String[] args) {
     nioConfig = PropertiesUtils.loadProperties(NioConfig.class, "config.yml");
-    NioInput nioInput = nioConfig.getActiveNioInput();
+    nioInput = nioConfig.getActiveNioInput();
     String functionName = nioConfig.getFunctionName();
     System.out.println(GSON.toJson(nioInput));
     InvokeRequest invokeRequest = new InvokeRequest()
@@ -64,7 +66,7 @@ public class NioApp {
     long duration = Duration.between(start, Instant.now()).toMillis();
     if (200 == invokeResult.getStatusCode()) {
       if(nioConfig.log) {
-        System.out.println(String.format("duration: %dms, throughput: %dKB/s", duration, nioConfig.getFileSize()/duration));
+        System.out.println(String.format("duration: %dms, throughput: %dKB/s", duration, nioInput.getFileSize()/duration));
       }
     } else {
       System.out.println("ERROR");
