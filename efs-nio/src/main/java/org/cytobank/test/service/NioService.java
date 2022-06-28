@@ -70,7 +70,8 @@ public class NioService implements Closeable {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    long duration = Duration.between(start, Instant.now()).toMillis();
+    long durationTemp = Duration.between(start, Instant.now()).toMillis();
+    long duration = durationTemp == 0l?1l:durationTemp;
     System.out.println(String.format("%d thread - file size: %dbytes, duration: %dms, throughput: %dKB/s\n", index, fileSize, duration, fileSize / 1024 / duration * 1000));
   }
 
