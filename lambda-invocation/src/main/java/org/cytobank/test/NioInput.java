@@ -33,4 +33,8 @@ public class NioInput {
    */
   int bufferSize = 1024 * 5;
 
+  /**
+   * individual file size
+   */
+  int fileSize;
 }

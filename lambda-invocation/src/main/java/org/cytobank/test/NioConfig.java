@@ -16,8 +16,6 @@ public class NioConfig {
 
   boolean log;
 
-  int fileSize;
-
   public NioInput getActiveNioInput() {
     return inputMap.get(active);
   }

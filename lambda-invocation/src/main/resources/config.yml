@@ -41,4 +41,4 @@ inputMap:
     directory: /home/ec2-user/efs
     bufferSize: 5120
     fileSize: 40960
-log: false
+log: true
