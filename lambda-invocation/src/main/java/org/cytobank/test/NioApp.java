@@ -53,16 +53,18 @@ public class NioApp {
     } catch (ServiceException e) {
       e.printStackTrace();
     }
-    System.out.println("Totally uses " + Duration.between(start, Instant.now()).toMillis() + "ms");
+    long duration = Duration.between(start, Instant.now()).toMillis();
+    System.out.println(String.format("total duration: %dms", duration));
     executorService.shutdownNow();
   }
 
   private static void invokeLambda(InvokeRequest invokeRequest) {
     Instant start = Instant.now();
     InvokeResult invokeResult = awsLambda.invoke(invokeRequest);
+    long duration = Duration.between(start, Instant.now()).toMillis();
     if (200 == invokeResult.getStatusCode()) {
       if(nioConfig.log) {
-      System.out.println("uses " + Duration.between(start, Instant.now()).toMillis() + "ms");
+        System.out.println(String.format("duration: %dms, throughput: %dKB/s", duration, nioConfig.getFileSize()/duration));
       }
     } else {
       System.out.println("ERROR");

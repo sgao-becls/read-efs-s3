@@ -8,6 +8,7 @@ inputMap:
     numThreads: 1
     directory: /home/ec2-user/efs
     bufferSize: 5120
+    fileSize: 1
   four_384_well_plates:
     numLambdas: 2992
     namePrefix: four_384_well_plates
@@ -15,6 +16,7 @@ inputMap:
     numThreads: 2
     directory: /home/ec2-user/efs
     bufferSize: 5120
+    fileSize: 48
   800_channel_1_file:
     numLambdas: 2400
     namePrefix: 800_channel_1_file
@@ -22,6 +24,7 @@ inputMap:
     numThreads: 50
     directory: /home/ec2-user/efs
     bufferSize: 5120
+    fileSize: 157
   large_amgen:
     numLambdas: 3960
     namePrefix: large_amgen
@@ -29,6 +32,7 @@ inputMap:
     numThreads: 1
     directory: /home/ec2-user/efs
     bufferSize: 5120
+    fileSize: 782
   5m_events:
     numLambdas: 840
     namePrefix: 5m_events
@@ -36,4 +40,5 @@ inputMap:
     numThreads: 21
     directory: /home/ec2-user/efs
     bufferSize: 5120
+    fileSize: 40960
 log: false
