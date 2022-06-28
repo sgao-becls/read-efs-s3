@@ -40,7 +40,7 @@ public class NioApp {
         .withCredentials(new ProfileCredentialsProvider())
         .withRegion(Regions.US_WEST_2).build();
 
-    ExecutorService executorService = Executors.newFixedThreadPool(100);
+    ExecutorService executorService = Executors.newFixedThreadPool(500);
     Instant start = Instant.now();
     try {
       CompletableFuture.allOf(IntStream.range(0, nioInput.getNumLambdas()).boxed()
