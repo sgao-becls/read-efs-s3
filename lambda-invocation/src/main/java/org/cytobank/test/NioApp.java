@@ -66,7 +66,7 @@ public class NioApp {
     long duration = Duration.between(start, Instant.now()).toMillis();
     if (200 == invokeResult.getStatusCode()) {
       if(nioConfig.log) {
-        System.out.println(String.format("duration: %dms, throughput: %dKB/s", duration, nioInput.getFileSize()/duration));
+        System.out.println(String.format("duration: %dms, throughput: %dKB/s", duration, 1000 * nioInput.getFileSize()/duration));
       }
     } else {
       System.out.println("ERROR");
