@@ -21,7 +21,6 @@ public class NioTestHandler implements RequestHandler<Input, String> {
   @Override
   public String handleRequest(Input input, Context context) {
     System.out.println(GSON.toJson(input));
-    System.out.println(input.getNumFiles());
     Path[] stripeFilePaths = new Path[input.getNumFiles()];
     for (int i = 0; i < input.getNumFiles(); i++) {
       stripeFilePaths[i] = Path.of(input.getDirectory(), String.format("%s.%d", input.getNamePrefix(), i));
