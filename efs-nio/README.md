@@ -25,11 +25,11 @@ Large Amgen (Many tailored pops)	 220	100000	782KB	Density Dot	3960	26205	18	Fal
 840/10/4     = 21
 
 
-fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=10 --bs=4k --filesize=48K --name=four_384_well_plates --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=48K --name=four_384_well_plates --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
 
 fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=600 --bs=4k --filesize=157K --name=800_channel_1_file --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
 
-fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=1 --bs=4k --filesize=782K --name=large_amgen --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=782K --name=large_amgen --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
 
-fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=21 --bs=4k --filesize=40MB --name=5m_events --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=40MB --name=5m_events --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
 ```

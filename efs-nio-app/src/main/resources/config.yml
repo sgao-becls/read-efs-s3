@@ -5,7 +5,7 @@ active: four_384_well_plates
 #active: 5m_events
 inputMap:
   custom:
-    numLambdas: 1
+    numRequests: 1
     namePrefix: song-test
     numFiles: 1
     numThreads: 1
@@ -13,36 +13,36 @@ inputMap:
     bufferSize: 5120
     fileSize: 1
   four_384_well_plates:
-    numLambdas: 2992
+    numRequests: 2992
     namePrefix: four_384_well_plates
-    numFiles: 2
-    numThreads: 2
+    numFiles: 5
+    numThreads: 5
     directory: /mnt/channelstripe
     bufferSize: 5120
     fileSize: 48
   800_channel_1_file:
-    numLambdas: 2400
+    numRequests: 2400
     namePrefix: 800_channel_1_file
-    numFiles: 25
-    numThreads: 25
+    numFiles: 5
+    numThreads: 5
     directory: /mnt/channelstripe
     bufferSize: 5120
     fileSize: 157
   large_amgen:
-    numLambdas: 3960
+    numRequests: 3960
     namePrefix: large_amgen
-    numFiles: 1
-    numThreads: 1
+    numFiles: 5
+    numThreads: 5
     directory: /mnt/channelstripe
     bufferSize: 5120
     fileSize: 782
   5m_events:
-    numLambdas: 840
+    numRequests: 840
     namePrefix: 5m_events
-    numFiles: 21
-    numThreads: 21
+    numFiles: 5
+    numThreads: 5
     directory: /mnt/channelstripe
     bufferSize: 5120
     fileSize: 40960
 log: true
-lambdaInvocationPoolSize: 100
+threadsPoolSize: 100
