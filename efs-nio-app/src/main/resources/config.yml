@@ -9,7 +9,7 @@ inputMap:
     namePrefix: song-test
     numFiles: 1
     numThreads: 1
-    directory: /mnt/channelstripe
+    directory: /home/ec2-user/efs
     bufferSize: 5120
     fileSize: 1
   four_384_well_plates:
@@ -17,7 +17,7 @@ inputMap:
     namePrefix: four_384_well_plates
     numFiles: 5
     numThreads: 5
-    directory: /mnt/channelstripe
+    directory: /home/ec2-user/efs
     bufferSize: 5120
     fileSize: 48
   800_channel_1_file:
@@ -25,7 +25,7 @@ inputMap:
     namePrefix: 800_channel_1_file
     numFiles: 5
     numThreads: 5
-    directory: /mnt/channelstripe
+    directory: /home/ec2-user/efs
     bufferSize: 5120
     fileSize: 157
   large_amgen:
@@ -33,7 +33,7 @@ inputMap:
     namePrefix: large_amgen
     numFiles: 5
     numThreads: 5
-    directory: /mnt/channelstripe
+    directory: /home/ec2-user/efs
     bufferSize: 5120
     fileSize: 782
   5m_events:
@@ -41,7 +41,7 @@ inputMap:
     namePrefix: 5m_events
     numFiles: 5
     numThreads: 5
-    directory: /mnt/channelstripe
+    directory: /home/ec2-user/efs
     bufferSize: 5120
     fileSize: 40960
 log: true
