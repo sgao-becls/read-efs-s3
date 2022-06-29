@@ -36,7 +36,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.6.5</version>
                 <configuration>
-                    <mainClass>org.cytobank.test.NioApp</mainClass>
+                    <mainClass>org.cytobank.test.App</mainClass>
                     <excludeGroupIds>org.projectlombok</excludeGroupIds>
                 </configuration>
                 <executions>
