@@ -81,7 +81,7 @@ public class NioService implements Closeable {
     Double throughput = fileSize / 1024d * 1000 * 1000 * 1000 / duration;
     totalThroughput.getAndAdd(throughput.intValue());
     totalFileSize.getAndAdd(fileSizeKB.intValue());
-    System.out.println(String.format("%d thread - file size: %.2fKB, duration: %.2fms, throughput: %.2fKB/s\n", index, fileSizeKB, duration / 1000d / 1000d, throughput));
+//    System.out.println(String.format("%d thread - file size: %.2fKB, duration: %.2fms, throughput: %.2fKB/s\n", index, fileSizeKB, duration / 1000d / 1000d, throughput));
   }
 
   @Override
