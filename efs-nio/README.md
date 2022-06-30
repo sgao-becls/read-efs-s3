@@ -32,4 +32,16 @@ fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=600 --bs=4k --file
 fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=782K --name=large_amgen --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
 
 fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=40MB --name=5m_events --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+
+
+fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=8MB --name=1m_events --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+
+fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=40MB --name=5m_events --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+
+fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=80MB --name=10m_events --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+
+fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=200MB --name=25m_events --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+
+fio --ioengine=libaio --iodepth=8 --readwrite=write --numjobs=25 --bs=4k --filesize=320MB --name=40m_events --directory=/home/ec2-user/efs --filename_format='$jobname.$jobnum'
+
 ```
