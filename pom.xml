@@ -15,6 +15,7 @@
         <module>lambda-invocation</module>
         <module>efs-nio</module>
         <module>efs-nio-app</module>
+        <module>sts-test</module>
     </modules>
 
     <properties>
