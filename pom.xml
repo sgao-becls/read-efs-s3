@@ -16,6 +16,7 @@
         <module>efs-nio</module>
         <module>efs-nio-app</module>
         <module>sts-test</module>
+        <module>efs-doublefile</module>
     </modules>
 
     <properties>
