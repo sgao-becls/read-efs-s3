@@ -8,7 +8,6 @@ import org.cytobank.io.DoubleFile;
 import org.cytobank.io.LargeFile;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
@@ -18,19 +17,27 @@ import java.time.Instant;
 @Log
 public class FileHandler implements RequestHandler<String, String> {
 
-  private static final boolean isLogEnabled;
+  private static final boolean LOG_ENABLED;
+  private static final int READ_TIMES;
 
   static {
-    String isLogEnabledStr = System.getenv().get("logEnabled");
-    if (StringUtils.isBlank(isLogEnabledStr)) {
-      isLogEnabled = false;
+    String logEnabledStr = System.getenv().get("logEnabled");
+    if (StringUtils.isBlank(logEnabledStr)) {
+      LOG_ENABLED = false;
     } else {
-      isLogEnabled = Boolean.parseBoolean(isLogEnabledStr);
+      LOG_ENABLED = Boolean.parseBoolean(logEnabledStr);
+    }
+
+    String readTimesStr = System.getenv().get("readTimes");
+    if (StringUtils.isBlank(logEnabledStr)) {
+      READ_TIMES = 1;
+    } else {
+      READ_TIMES = Integer.parseInt(readTimesStr);
     }
   }
 
   private void checkAndPrint(String message) {
-    if (isLogEnabled) {
+    if (LOG_ENABLED) {
       print(message);
     }
   }
@@ -41,6 +48,13 @@ public class FileHandler implements RequestHandler<String, String> {
 
   @Override
   public String handleRequest(String path, Context context) {
+    for (int i = 0; i < READ_TIMES; i++) {
+      readFile(path);
+    }
+    return null;
+  }
+
+  private void readFile(String path) {
     Instant start = Instant.now();
     try (FileChannel fileChannel = new FileInputStream(Paths.get(path).toFile()).getChannel()) {
       DoubleFile doubleFile = new DoubleFile(fileChannel, LargeFile.READ_ONLY);
@@ -50,12 +64,9 @@ public class FileHandler implements RequestHandler<String, String> {
       for (int i = 0; i < eventsNumber; i++) {
         checkAndPrint(String.format("events[%d] = %f", i, doubleFile.get(i)));
       }
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     }
-    print(String.format("Userd: %dms", Duration.between(start, Instant.now()).toMillis()));
-    return null;
+    print(String.format("Used: %dms", Duration.between(start, Instant.now()).toMillis()));
   }
 }
