@@ -15,7 +15,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Log
-public class FileHandler implements RequestHandler<String, String> {
+public class FileHandler implements RequestHandler<Input, String> {
 
   private static final boolean LOG_ENABLED;
   private static final int READ_TIMES;
@@ -47,9 +47,9 @@ public class FileHandler implements RequestHandler<String, String> {
   }
 
   @Override
-  public String handleRequest(String path, Context context) {
+  public String handleRequest(Input path, Context context) {
     for (int i = 0; i < READ_TIMES; i++) {
-      readFile(path);
+      readFile(path.getPath());
     }
     return null;
   }

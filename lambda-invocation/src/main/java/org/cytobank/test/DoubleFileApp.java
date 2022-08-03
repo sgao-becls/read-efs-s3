@@ -40,11 +40,17 @@ public class DoubleFileApp {
     log.info(message);
   }
 
+  @Data
+  private static class Input {
+    String path;
+  }
+
   public static void main(String[] args) {
 
     final String functionName = args[0];
     final int lambdas = Integer.parseInt(args[1]);
-    final String input = args[2];
+    Input input = new Input();
+    input.setPath(args[2]);
     final String logEnable = args[3];
     if (Objects.isNull(logEnable) || logEnable.isBlank()) {
       LOG_ENABLED = false;
@@ -54,7 +60,7 @@ public class DoubleFileApp {
 
     InvokeRequest invokeRequest = new InvokeRequest()
         .withFunctionName(functionName)
-        .withPayload(input);
+        .withPayload(GSON.toJson(input));
     awsLambda = AWSLambdaClientBuilder.standard()
         .withCredentials(new ProfileCredentialsProvider())
         .withRegion(Regions.US_WEST_2).build();
