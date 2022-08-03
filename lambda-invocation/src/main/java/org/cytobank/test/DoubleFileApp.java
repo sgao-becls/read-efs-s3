@@ -12,7 +12,6 @@ import com.google.gson.GsonBuilder;
 import lombok.Data;
 import lombok.extern.java.Log;
 
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
@@ -88,19 +87,13 @@ public class DoubleFileApp {
     Instant start = Instant.now();
     InvokeResult invokeResult = awsLambda.invoke(invokeRequest);
 
-    String ans = new String(invokeResult.getPayload().array(), StandardCharsets.UTF_8);
 
-    InvokeResultObject invokeResultObject = GSON.fromJson(ans, InvokeResultObject.class);
-    if(200 == invokeResultObject.getStatusCode()) {
+    if(200 == invokeResult.getStatusCode()) {
       checkAndPrint("uses " + Duration.between(start, Instant.now()).toMillis() + "ms");
     } else {
       System.out.println("ERROR");
     }
   }
 
-  @Data
-  private static class InvokeResultObject {
-    int statusCode;
-    String body;
-  }
+
 }
